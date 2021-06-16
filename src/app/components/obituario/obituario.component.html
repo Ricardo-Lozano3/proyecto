@@ -1,0 +1,40 @@
+<app-menu></app-menu>
+<a target="_blank" href="https://api.whatsapp.com/send?phone=573174785093&amp;text=Hola!%20quiero%20saber%20más%20de%20Prevenir%20Express!" class="btn-flotante">
+  <h4 class="text-white mai-logo-whatsapp"></h4>
+</a>
+
+<div class="row">
+  <div class=col-md-12>
+      <img src="./assets/images/prevenir/familia.jpg" style="max-width: 100%; padding-top: 65px;  width: 100%;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;">
+  </div>
+
+</div>
+
+
+  <div class="imgFondo">
+
+
+  <div class="row">
+      <div class=col-md-1></div>
+      <div class="col-md-10"><br>
+        <h2 class="text-center ">Obituarios</h2>
+      </div>
+      <div class=col-md-1></div>
+    </div>
+    <div id="carouselExampleIndicators000" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner"  role="listbox"><br>
+          <div  class="carousel-item text-center" *ngFor="let f of fotografias | imagenes:tipo; let i = index" [ngClass]="{'active': i == 0 }">
+            <div >
+              <a class=" " >
+                 <img [src]="url + f.ruta" class="imgObituarios"/>
+              </a>
+           </div>
+        </div>
+      </div>
+      <a class="carousel-control-prev mk9" href="#carouselExampleIndicators000" role="button" data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a>
+      <a class="carousel-control-next mk9" href="#carouselExampleIndicators000" role="button" data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span> </a>
+  </div>
+  </div>
+<app-footer></app-footer>

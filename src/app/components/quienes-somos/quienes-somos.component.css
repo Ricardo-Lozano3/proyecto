@@ -1,0 +1,19 @@
+.tituloPrincipal{
+    color: #07A9DF;
+    font-weight: bold;
+    padding-bottom: 30px;
+}
+
+
+.carousel{
+	color: #07A9DF;
+    font-weight: bold;
+}
+
+.sliderPalabras{
+    background-color: #07A9DF;
+    text-align: center;
+    font-size: 1,8vw;
+    color: white;
+    padding: 2vw;
+}
