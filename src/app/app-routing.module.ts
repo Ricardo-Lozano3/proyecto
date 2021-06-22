@@ -16,6 +16,7 @@ import { LoginComponent } from './components/login/login.component';
 import { UserGuard } from './services/user.guard';
 import { FundacionComponent } from './components/fundacion/fundacion.component';
 import { FormularioIncripcionComponent } from './components/formulario-incripcion/formulario-incripcion.component';
+import { IniciobotComponent } from './components/iniciobot/iniciobot.component';
 
 // formulario component
 
@@ -35,6 +36,7 @@ const routes: Routes = [
  {path: 'subirImagen', component : SubirImagenComponent, canActivate: [UserGuard]},
  {path: 'login', component : LoginComponent},
  {path: 'fundacion', component : FundacionComponent},
+ { path: 'bot', component: IniciobotComponent },
  {path: '**', component : InicioComponent}
 ];
 

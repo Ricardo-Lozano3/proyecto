@@ -1,4 +1,4 @@
-!-- <app-menu></app-menu> -->
+<app-menu></app-menu>
 
 <div #contenedor id="contenedor" class="container">
     <div class="text-center">
@@ -267,7 +267,7 @@
                                                         <div class="row mb-3">
                                                                 <div class="col-md-12">
                                                                         <label class="form-label">Fecha nacimiento</label>
-                                                                        <input type="date" class="form-control" [max]="today" placeholder="Fecha de nacimiento." id="fechaBeneficiario" (change)="comprobarFecha('fechaBeneficiario')">
+                                                                        <input type="date" class="form-control" [max]="today" placeholder="Fecha de nacimiento." [id]="'fechaBeneficiario' + i" (change)="valorBeneficiario()">
                                                                         <p [id]="'textfn' + i" style="color: red; font-size: 13px; display: none;">* Esta campo es requerido.</p>
                                                                 </div>
         
@@ -308,7 +308,7 @@
                                                                 <div class="col-md-12">
                                                                         <div class="formGroup">
                                                                                 <label class="form-label">Cédula</label>
-                                                                                <input type="number" class="form-control" min="0" placeholder="No. de identificación." [id]="'numeroDocumento' + i" (keypress)="cambioHtml($event, 'numeroDocumento', i)">
+                                                                                <input type="number" class="form-control" min="0" placeholder="No. de identificación." [id]="'numeroDocumento' + i" (keypress)="cambioHtml($event, 'numeroDocumento', i)" >
                                                                                 <p [id]="'textnd' + i" style="color: red; font-size: 13px; display: none;">* Esta campo es requerido.</p>
                                                                                 <p [id]="'textndo' + i" style="color: red; font-size: 13px; display: none;">* Número invalido.</p>
                                                                         </div>
@@ -318,7 +318,7 @@
                                                                         <label class="form-label">Parentesco</label>
                                                                         <select class="form-control" [id]="'parentesco' + i" (change)="cambioHtml($event, 'parentesco', i)">
                                                                                 <option disabled></option>
-                                                                                <option *ngFor="let p of parentesco" [value]="p.id_parentescos">{{p.nombre}}</option>
+                                                                                <option *ngFor="let p of parentesco" [value]="p.nombre">{{p.nombre}}</option>
                                                                         </select>
                                                                         <p [id]="'textpa' + i" style="color: red; font-size: 13px; display: none;">* Esta campo es requerido.</p>
                                                                 </div>
@@ -400,7 +400,10 @@
             
                                             <div class="card-header"></div>
                                             <div class="text-center" style="padding-top: 5px;">
-                                                <button class="btn btn-primary">Pagar</button>
+                                                <button class="btn btn-primary"
+                                                        (click)="obtenerDatosB()">
+                                                        Pagar
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -411,6 +414,8 @@
         </div>
     </div>
 </div>
+
+<app-footer></app-footer>
 
 <!-- <h2>Valido: {{datosUsuario.valid}} </h2>
 

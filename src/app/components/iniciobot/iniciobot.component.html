@@ -1,0 +1,77 @@
+<app-menu></app-menu>
+
+<div #contenedor id="contenedor" class="container">
+    <div class="text-center">
+        <h4 class="display-4">Formulario de inscripción individual</h4>
+    </div>
+    <div class="row" style="margin-top: 50px;">
+        <div class="col-md-5">
+            <div class="card text-center ">
+                <div class="card-header">
+                  <ul class="nav nav-pills card-header-pills">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="registro">Registro</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="login">Login</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="card-body active" href="registro">
+                  <div>
+                      <form [formGroup]="datosUsuario">
+
+                        <div class="mb-3 row">
+                          <label for="text" class="col-sm-5 col-form-label">Nombre</label>
+                          <div class="col-sm-7">
+                            <input type="text" class="form-control border border-dark border-3 rounded" formArrayName="nombreCompleto">
+                          </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                          <label for="text" class="col-sm-5 col-form-label">Empresa</label>
+                          <div class="col-sm-7">
+                            <input type="text" class="form-control border border-dark border-3 rounded" formArrayName="empresa">
+                          </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                          <label for="text" class="col-sm-5 col-form-label">Email</label>
+                          <div class="col-sm-7">
+                            <input type="text" class="form-control border border-dark border-3 rounded" formArrayName="email">
+                          </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                          <label for="text" class="col-sm-5 col-form-label">Username</label>
+                          <div class="col-sm-7">
+                            <input type="text" class="form-control border border-dark border-3 rounded" formArrayName="username">
+                          </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                          <label for="text" class="col-sm-5 col-form-label">Contraseña</label>
+                          <div class="col-sm-7">
+                            <input type="password" class="form-control border border-dark border-3 rounded" formArrayName="contraseña">
+                          </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                          <label for="text" class="col-sm-5 col-form-label">Confirmar contraseña</label>
+                          <div class="col-sm-7">
+                            <input type="text" class="form-control border border-dark border-3 rounded" formArrayName="contraseñaConfirm">
+                          </div>
+                        </div>
+
+                      </form>
+                  </div>
+                  <a href="#" class="btn btn-primary">Registrarse</a>
+                </div>
+              </div>
+        </div>
+    </div>
+
+</div>
+
+
+<app-footer></app-footer>

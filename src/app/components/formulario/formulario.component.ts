@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup, FormControl, FormsModule } from '@angular/forms';
 import * as moment from 'moment';
 import { AppService } from 'src/app/services/app.service';
 import { Pipe, PipeTransform } from '@angular/core';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-formulario',
@@ -43,7 +44,7 @@ export class FormularioComponent implements OnInit {
     this.inicializarFormulario()
     this.getDepartamentos();
     this.getParentesco();
-    //this.inicioPrueba()
+    this.inicioPrueba()
     //this.valorSuscripcion()
     this.departamento.valueChanges.subscribe( () => {
       this.departamentoSelect();
@@ -103,7 +104,7 @@ export class FormularioComponent implements OnInit {
   selecionarMunicipio(Municipio) {
     this.buscarDepasMunis = null;
     (<HTMLInputElement>document.getElementById('idmunicipio')).value = Municipio.nombreMunicipio + ' - ' + Municipio.nombreDepartamento;
-    this.datosUsuario.get('municipio').setValue(Municipio.idmunicipio);
+    this.datosUsuario.get('municipio').setValue(Municipio.nombreMunicipio);
   }
 
   deparMuniBuscar(event:string){
@@ -156,6 +157,29 @@ export class FormularioComponent implements OnInit {
     }
   }
 
+  valorBeneficiario(){
+    let posicion = this.formsBeneficiario.length - 1;
+    let formValido = [{campo : 'fechaBeneficiario', bol: false}]
+
+    let fechaBeneficiario: any = document.getElementById('fechaBeneficiario' + posicion);
+    fechaBeneficiario = fechaBeneficiario.value;
+    formValido[0].bol = true
+    //console.log(fechaBeneficiario)
+    let fechaT = moment(fechaBeneficiario)
+    let edad = parseInt(fechaT.fromNow())
+    console.log('la edad es: '+edad)
+    if ( edad < 65 ){
+      this.valorSuscripcionBeneficiario = 25000;
+    }else if ( edad > 64 && edad < 70 ){
+      this.valorSuscripcionBeneficiario = 30000;
+    }else if ( edad > 69 && edad < 74 ){
+      this.valorSuscripcionBeneficiario = 35000
+    } else if( edad > 74 ){
+      this.status = 'error'
+      this.statusText = 'El usuario es mayor de 74 años'
+    }
+  }
+
   comprobarFecha(id){
     let fechaBeneficiario: any = document.getElementById(id);
     fechaBeneficiario = fechaBeneficiario.value;
@@ -175,13 +199,67 @@ export class FormularioComponent implements OnInit {
     }
   }
 
+  obtenerDatosB(){
+    
+    let posicion = this.formsBeneficiario.length - 1;
+    let formValido = [{campo : 'nombreYapellido', bol: false },
+                       {campo : 'tipoDocumento', bol: false },
+                       {campo : 'parentesco', bol: false },
+                       {campo : 'numeroDocumento', bol: false },
+                       {campo : 'fechaBeneficiario', bol: false },
+                       {campo : 'numeroCelular', bol: false }];
+
+     // nombre y apellido
+     let nombreYapellido: any = document.getElementById('nombreYapellido' + posicion);
+     nombreYapellido = nombreYapellido.value;
+     console.log(nombreYapellido)
+     formValido[0].bol = true;
+     // Tipo de documento
+     let tipoDocumento: any = document.getElementById('tipoDocumento' + posicion);
+     tipoDocumento = tipoDocumento.value;
+     console.log(tipoDocumento)
+     formValido[1].bol = true;
+     // Parentesco
+     let parentesco: any = document.getElementById('parentesco' + posicion);
+     parentesco = parentesco.value;
+     console.log(parentesco)
+     formValido[2].bol = true;
+     // número de documento
+     let numeroDocumento: any = document.getElementById('numeroDocumento' + posicion);
+     numeroDocumento = numeroDocumento.value;
+     console.log(numeroDocumento)
+     formValido[3].bol = true;
+     // Fecha de nacimiento
+     let fechaBeneficiario: any = document.getElementById('fechaBeneficiario' + posicion);
+     fechaBeneficiario = fechaBeneficiario.value;
+     console.log(fechaBeneficiario)
+     formValido[4].bol = true;
+     // Numero de celular
+     let numeroCelular: any = document.getElementById('numeroCelular' + posicion);
+     numeroCelular = numeroCelular.value;
+     console.log(numeroCelular)
+     formValido[5].bol = true;
+
+    this.beneficiarios.push({
+      nombreYapellido,
+      tipoDocumento,
+      numeroDocumento,
+      parentesco,
+      fechaBeneficiario,
+      numeroCelular
+    })
+
+    this.enviarDatos()
+  }
+
+  enviarDatos(){
+    console.log(this.datosUsuario.value)
+    console.log(this.beneficiarios)
+  }
+
   agregarBeneficiario() {
 
     // console.log(this.formsBeneficiario);
-
-    if (this.verEdad() < 73) {
-      
-    }
 
     if (this.formsBeneficiario.length <= 0) {
 
@@ -211,25 +289,11 @@ export class FormularioComponent implements OnInit {
        console.log(nombreYapellido)
        formValido[0].bol = true;
 
-
-       // Validaciones nombre
-       if (this.validacionCadenaDeTexto(nombreYapellido, 'nombreYapellido', posicion) === 'caracteres_validos') {
-          formValido[0].bol = true;
-          console.log(bol)
-      }
-
        // Tipo de documento
        let tipoDocumento: any = document.getElementById('tipoDocumento' + posicion);
        tipoDocumento = tipoDocumento.value;
        console.log(tipoDocumento)
        formValido[1].bol = true;
-
-
-       // Validaciones tipo de documento
-       if (this.validacionesRequire(tipoDocumento, 'tipoDocumento', posicion) === 'valido') {
-        formValido[1].bol = true;
-        console.log(bol)
-       }
 
        // Parentesco
        let parentesco: any = document.getElementById('parentesco' + posicion);
@@ -237,26 +301,11 @@ export class FormularioComponent implements OnInit {
        console.log(parentesco)
        formValido[2].bol = true;
 
-
-       // Validaciones de parentesco
-       if (this.validacionesRequire(parentesco, 'parentesco', posicion) === 'valido') {
-        formValido[2].bol = true;
-        console.log(bol)
-       }
-
        // número de documento
        let numeroDocumento: any = document.getElementById('numeroDocumento' + posicion);
        numeroDocumento = numeroDocumento.value;
        console.log(numeroDocumento)
        formValido[3].bol = true;
-
-
-
-       // validaciones numero de documento
-       if ( this.validacionNumeros(numeroDocumento, 'numeroDocumento', posicion) === 'numero_valido') {
-        formValido[3].bol = true;
-        console.log(bol)
-       }
 
        // Fecha de nacimiento
        let fechaBeneficiario: any = document.getElementById('fechaBeneficiario' + posicion);
@@ -264,23 +313,11 @@ export class FormularioComponent implements OnInit {
        console.log(fechaBeneficiario)
        formValido[4].bol = true;
 
-       // Validaciones fecha de nacimiento
-       if (this.validacionesRequire(fechaBeneficiario, 'fechaBeneficiario', posicion) === 'valido') {
-        formValido[4].bol = true;
-        console.log(bol)
-       }
-
        // Numero de celular
        let numeroCelular: any = document.getElementById('numeroCelular' + posicion);
        numeroCelular = numeroCelular.value;
+       console.log(numeroCelular)
        formValido[5].bol = true;
-
-
-       // validaciones numero de celular
-       if ( this.validacionNumeros(numeroCelular, 'numeroCelular', posicion) === 'numero_valido') {
-        formValido[5].bol = true;
-        console.log(bol)
-       }
 
        var bol: boolean;
 
@@ -288,7 +325,7 @@ export class FormularioComponent implements OnInit {
        // tslint:disable-next-line: prefer-for-of
        for (let i = 0; i < formValido.length; i++) {
 
-        console.log(bol)
+        //console.log(bol)
 
         bol = formValido[i].bol;
         if (bol === false) {
@@ -547,14 +584,14 @@ validacionesRequire(value, tipo: string, posicion: number): string {
       }
     break;
 
-    case 'fechaNacimiento' :
+    case 'fechaBeneficiario' :
 
       if (value) {
-        document.getElementById('fechaNacimiento' + posicion).className = 'form-control';
+        document.getElementById('fechaBeneficiario' + posicion).className = 'form-control';
         document.getElementById('textfn' + posicion).style.display = 'none';
         return 'valido';
       } else {
-        document.getElementById('fechaNacimiento' + posicion).className = 'form-control is-invalid';
+        document.getElementById('fechaBeneficiario' + posicion).className = 'form-control is-invalid';
         document.getElementById('textfn' + posicion).style.display = '';
         return 'invalido';
       }
@@ -585,7 +622,7 @@ cambioHtml(ev, tipo, posicion) {
    this.validacionesRequire(value, tipo, posicion);
    break;
 
-   case 'fechaNacimiento' :
+   case 'fechaBeneficiario' :
    this.validacionesRequire(value, tipo, posicion);
    break;
 
